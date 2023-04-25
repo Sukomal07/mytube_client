@@ -7,10 +7,10 @@ const Container = styled.div`
     display: flex;
     flex: 7;
     flex-direction: column;
-    font-size: 2rem;
-    font-weight: 100;
+    font-size: 3rem;
+    font-weight: 400;
     gap: 1rem;
-    height: 86vh;
+    height: 80vh;
     justify-content: center;
     overflow-x: hidden;
     overflow-y: auto;
