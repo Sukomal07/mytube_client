@@ -1,4 +1,4 @@
-import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components'
 import { useDarkMode } from './components/useDarkMode.js'
 import MenuBar from './components/MenuBar.jsx';
@@ -6,7 +6,7 @@ import Navbar from './components/Navbar';
 import SignIn from './pages/SignIn.jsx';
 import Home from './pages/Home.jsx'
 import Video from './pages/Video.jsx'
-import {Toaster} from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import { darkTheme, lightTheme } from './utils/Theme.js'
 import Search from './pages/Search.jsx';
 import Subscription from './pages/Subscription.jsx';
@@ -25,32 +25,32 @@ padding: 22px 40px;
 
 function App() {
   const [theme, setTheme] = useDarkMode()
-  
+
   const themeMode = theme === 'light' ? lightTheme : darkTheme
   return (
     <ThemeProvider theme={themeMode}>
       <Router>
-      <Container>
-      <MenuBar theme={theme} setTheme={setTheme}  />
-        <Main>
-        <Navbar />
-          <Wrapper >
-            <Routes>
-              <Route path='/'>
-                <Route index element={<Home/>} />
-                <Route path='trends' element={<Explore />} />
-                <Route path='subscription' element={<Subscription/>} />
-                <Route path='search' element={<Search />} />
-                <Route path='signin' element={<SignIn/>} />
-                <Route path='video'>
-                <Route path=':id' element={<Video />} />
+        <Container>
+          <MenuBar theme={theme} setTheme={setTheme} />
+          <Main>
+            <Navbar />
+            <Wrapper >
+              <Routes>
+                <Route path='/'>
+                  <Route index element={<Home />} />
+                  <Route path='trends' element={<Explore />} />
+                  <Route path='subscription' element={<Subscription />} />
+                  <Route path='search' element={<Search />} />
+                  <Route path='signin' element={<SignIn />} />
+                  <Route path='video'>
+                    <Route path=':id' element={<Video />} />
+                  </Route>
                 </Route>
-              </Route>
-            </Routes>
-          </Wrapper>
-        </Main>
-        <Toaster/>
-      </Container>
+              </Routes>
+            </Wrapper>
+          </Main>
+          <Toaster />
+        </Container>
       </Router>
     </ThemeProvider>
   );

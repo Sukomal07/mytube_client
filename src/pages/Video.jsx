@@ -215,7 +215,7 @@ const Video = () => {
             await axios.put(`${process.env.REACT_APP_SERVER}/users/like/${currentVideo._id}`, null, {
                 withCredentials: true
             })
-            dispatch(like(user._id))
+            dispatch(like(user?._id))
         } catch (error) {
             console.log(error)
         }
@@ -230,7 +230,7 @@ const Video = () => {
             await axios.put(`${process.env.REACT_APP_SERVER}/users/dislike/${currentVideo._id}`, null, {
                 withCredentials: true
             })
-            dispatch(dislike(user._id))
+            dispatch(dislike(user?._id))
         } catch (error) {
             console.log(error)
         }
@@ -241,7 +241,7 @@ const Video = () => {
             if (!user) {
                 navigate("/signin")
             }
-            user.subscribedUser.includes(channel._id) ?
+            user?.subscribedUser?.includes(channel._id) ?
                 await axios.put(`${process.env.REACT_APP_SERVER}/users/unsub/${channel._id}`, null, {
                     withCredentials: true
                 })
@@ -249,7 +249,7 @@ const Video = () => {
                 await axios.put(`${process.env.REACT_APP_SERVER}/users/sub/${channel._id}`, null, {
                     withCredentials: true
                 })
-            dispatch(subscription(channel._id))
+            dispatch(subscription(channel?._id))
         } catch (error) {
             console.log(error)
         }

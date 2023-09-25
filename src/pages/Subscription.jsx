@@ -35,7 +35,7 @@ const Subscription = () => {
             }
         }
         fetchVideos()
-    }, [])
+    }, [user, navigate])
     return (
         <Container>
             {loading ? <Loader /> :
