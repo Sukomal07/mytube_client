@@ -89,32 +89,32 @@ const Input = styled.input`
   font-size: 15px;
 `
 
-const Comment = ({comment,onDelete}) => {
-    const[channel, setChannel] = useState({})
+const Comment = ({ comment, onDelete }) => {
+    const [channel, setChannel] = useState({})
     const [showOptions, setShowOptions] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [newDesc, setNewDesc] = useState(comment.desc);
 
     const { user } = useSelector((state) => state.user)
-    const handleIconClick = (e) => { 
+    const handleIconClick = (e) => {
         e.stopPropagation();
         setShowOptions(!showOptions);
     };
-    const handleEdit = (e) => { 
+    const handleEdit = (e) => {
         e.stopPropagation();
         setIsEditing(true);
     };
-    const handleDelete = async(e) => { 
+    const handleDelete = async (e) => {
         e.stopPropagation();
         try {
-            await axios.delete(`${process.env.REACT_APP_SERVER}/comments/${comment._id}`,{
-                withCredentials:true
+            await axios.delete(`${process.env.REACT_APP_SERVER}/comments/${comment._id}`, {
+                withCredentials: true
             })
             onDelete(comment._id);
             setShowOptions(false)
-            
+
         } catch (error) {
-            console.log(error)
+            alert(error)
         }
     };
 
@@ -123,27 +123,27 @@ const Comment = ({comment,onDelete}) => {
         try {
             await axios.put(`${process.env.REACT_APP_SERVER}/comments/${comment?._id}`, {
                 desc: newDesc,
-                commentId:comment?._id
+                commentId: comment?._id
             }, {
-                withCredentials:true
+                withCredentials: true
             });
             setIsEditing(false);
         } catch (error) {
-            console.log(error);
+            alert(error);
         }
     };
 
-    useEffect(() =>{
-        const fetchComments= async() =>{
+    useEffect(() => {
+        const fetchComments = async () => {
             try {
                 const res = await axios.get(`${process.env.REACT_APP_SERVER}/users/find/${comment.userId}`)
                 setChannel(res.data)
             } catch (error) {
-                console.log(error)
+                alert(error)
             }
         }
         fetchComments()
-    },[comment.userId])
+    }, [comment.userId])
 
     return (
         <Container>
@@ -165,30 +165,30 @@ const Comment = ({comment,onDelete}) => {
                 </Details>
             </Wrapper>
             {user && (user._id === comment?.userId) && (
-            <Icon onClick={handleIconClick}>
-                <MoreVertIcon />
-                {showOptions && (
-                <Options>
-                    {isEditing ? (
-                        <Option onClick={handleSave}>
-                            Save
-                        </Option>
-                    ) : (
-                        <>
-                            <Option onClick={handleEdit}>
-                                <EditIcon />
-                                Edit
-                            </Option>
-                            <Option onClick={handleDelete}>
-                                <DeleteIcon />
-                                Delete
-                            </Option>
-                        </>
+                <Icon onClick={handleIconClick}>
+                    <MoreVertIcon />
+                    {showOptions && (
+                        <Options>
+                            {isEditing ? (
+                                <Option onClick={handleSave}>
+                                    Save
+                                </Option>
+                            ) : (
+                                <>
+                                    <Option onClick={handleEdit}>
+                                        <EditIcon />
+                                        Edit
+                                    </Option>
+                                    <Option onClick={handleDelete}>
+                                        <DeleteIcon />
+                                        Delete
+                                    </Option>
+                                </>
+                            )}
+                        </Options>
                     )}
-                </Options>
-                )}
-            </Icon>
-        )}
+                </Icon>
+            )}
         </Container>
     )
 }

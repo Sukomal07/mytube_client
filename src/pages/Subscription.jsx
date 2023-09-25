@@ -31,7 +31,7 @@ const Subscription = () => {
                 setVideos(res.data)
                 setLoading(false)
             } catch (err) {
-                console.error(err)
+                alert(err)
             }
         }
         fetchVideos()

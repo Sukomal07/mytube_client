@@ -61,7 +61,7 @@ const CancelButton = styled.button`
   font-weight:500 ;
   font-size: 15px;
   padding: 5px 10px;
-  color: ${({theme}) => theme.text};
+  color: ${({ theme }) => theme.text};
   &:hover{
     background-color: #6060604d;
     border-radius: 20px;
@@ -82,7 +82,7 @@ const Comments = ({ videoId }) => {
         )
         setComments(res.data)
       } catch (error) {
-        console.log(error)
+        alert(error)
       }
     }
     fetchComments()
@@ -96,25 +96,25 @@ const Comments = ({ videoId }) => {
     setShowButtons(false)
   }
 
-  const handleCommentButtonClick = async() => {
+  const handleCommentButtonClick = async () => {
     if (!user) {
       alert('Please login to add a comment.');
       return;
     }
     try {
-      const res = await axios.post(`${process.env.REACT_APP_SERVER}/comments`,{
-        desc:commentInput,
-        videoId:videoId
-      },{
-        headers:{
-          "Content-Type":"application/json"
+      const res = await axios.post(`${process.env.REACT_APP_SERVER}/comments`, {
+        desc: commentInput,
+        videoId: videoId
+      }, {
+        headers: {
+          "Content-Type": "application/json"
         }
-        ,withCredentials:true
+        , withCredentials: true
       })
       setComments([...comments, res.data])
       setCommentInput("")
     } catch (error) {
-      console.log(error)
+      alert(error)
     }
   }
 
@@ -128,13 +128,13 @@ const Comments = ({ videoId }) => {
         <Input placeholder='Add a Comment...' value={commentInput} onChange={(e) => setCommentInput(e.target.value)} onClick={handleInputClick} />
       </NewComment>
       {showButtons && (
-          <ButtonGroup>
-            <CancelButton onClick={handleCancelButtonClick}>
-              Cancel
-            </CancelButton>
-            <Button onClick={handleCommentButtonClick}>Comment</Button>
-          </ButtonGroup>
-        )}
+        <ButtonGroup>
+          <CancelButton onClick={handleCancelButtonClick}>
+            Cancel
+          </CancelButton>
+          <Button onClick={handleCommentButtonClick}>Comment</Button>
+        </ButtonGroup>
+      )}
       {Array.isArray(comments) && comments.map((comment) => (
         <Comment key={comment?._id} comment={comment} onDelete={onDelete} />
       ))}

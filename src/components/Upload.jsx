@@ -97,9 +97,9 @@ const Upload = ({ setOpen }) => {
         setTags(e.target.value.split(","))
     }
 
-    const handleInputs = (e) =>{
-        setInputs((prev) =>{
-            return {...prev, [e.target.name]: e.target.value}
+    const handleInputs = (e) => {
+        setInputs((prev) => {
+            return { ...prev, [e.target.name]: e.target.value }
         })
         const { title, desc } = inputs
         if (title && desc && tags.length > 0 && imgPerc === 100 && videoPerc === 100) {
@@ -119,31 +119,31 @@ const Upload = ({ setOpen }) => {
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 urlType === 'imgurl' ? setImgPerc(Math.round(progress)) : setVideoPerc(Math.round(progress))
             },
-            (error) => {console.log(error)},
+            (error) => { alert(error) },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    setInputs((prev) =>{
-                        return {...prev, [urlType]: downloadURL}
+                    setInputs((prev) => {
+                        return { ...prev, [urlType]: downloadURL }
                     })
                 });
             }
         );
     }
-    useEffect(() => {video && uploadFile(video, 'videoUrl') }, [video] )
+    useEffect(() => { video && uploadFile(video, 'videoUrl') }, [video])
     useEffect(() => { image && uploadFile(image, 'imgurl') }, [image])
 
-    const handleUpload = async(e) =>{
+    const handleUpload = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post(`${process.env.REACT_APP_SERVER}/videos`,{
-                ...inputs,tags
-            },{
-                withCredentials:true
+            const res = await axios.post(`${process.env.REACT_APP_SERVER}/videos`, {
+                ...inputs, tags
+            }, {
+                withCredentials: true
             })
             setOpen(false)
             res.status === 200 && navigate(`/video/${res.data._id}`)
         } catch (error) {
-            console.log(error)
+            alert(error)
         }
     }
     return (
@@ -153,14 +153,14 @@ const Upload = ({ setOpen }) => {
                 <Title>Upload a new Video</Title>
                 <InputDiv>
                     <Label>Video</Label>
-                    {videoPerc > 0 ? ("Uploading: " + videoPerc + " %"):(<Input type='file' accept='video/*' required onChange={(e) => setVideo(e.target.files[0])} />)}
+                    {videoPerc > 0 ? ("Uploading: " + videoPerc + " %") : (<Input type='file' accept='video/*' required onChange={(e) => setVideo(e.target.files[0])} />)}
                 </InputDiv>
                 <InputDiv>
                     <Label>Thumbnail</Label>
-                    {imgPerc > 0 ? ("Uploading: " + imgPerc + " %"):(<Input type='file' accept='image/*' required onChange={(e) => SetImage(e.target.files[0])} />)}
+                    {imgPerc > 0 ? ("Uploading: " + imgPerc + " %") : (<Input type='file' accept='image/*' required onChange={(e) => SetImage(e.target.files[0])} />)}
                 </InputDiv>
                 <Input type='text' name='title' placeholder='Video title' required onChange={handleInputs} />
-                <Desc placeholder='Description' name='desc' required rows={8}  onChange={handleInputs} />
+                <Desc placeholder='Description' name='desc' required rows={8} onChange={handleInputs} />
                 <Input type='text' placeholder='Tags(Ex- Travel , Funny)' required onChange={handleTags} />
                 <Button disabled={uploadDisabled} onClick={handleUpload} >Upload</Button>
             </Wrapper>

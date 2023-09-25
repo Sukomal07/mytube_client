@@ -217,7 +217,7 @@ const Video = () => {
             })
             dispatch(like(user?._id))
         } catch (error) {
-            console.log(error)
+            alert(error)
         }
     }
 
@@ -232,7 +232,7 @@ const Video = () => {
             })
             dispatch(dislike(user?._id))
         } catch (error) {
-            console.log(error)
+            alert(error)
         }
     }
 
@@ -251,14 +251,14 @@ const Video = () => {
                 })
             dispatch(subscription(channel?._id))
         } catch (error) {
-            console.log(error)
+            alert(error)
         }
     }
     const updateViewCount = async () => {
         try {
             await axios.put(`${process.env.REACT_APP_SERVER}/videos/view/${currentVideo._id}`);
         } catch (error) {
-            console.log(error);
+            alert(error);
         }
     }
 
@@ -268,10 +268,10 @@ const Video = () => {
                 title: currentVideo.title,
                 url: window.location.href,
             })
-                .then(() => console.log('Sharing successful'))
-                .catch((error) => console.log('Error sharing:', error));
+                .then(() => alert('Sharing successful'))
+                .catch((error) => alert('Error sharing:', error));
         } else {
-            console.log('Web Share API not supported');
+            alert('Web Share API not supported');
         }
     }
 
